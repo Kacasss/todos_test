@@ -9,7 +9,6 @@
         <div class="w-screen flex justify-center items-center {{empty($errors->all()) && is_null(session('message')) ? 'mt-8' : ''}}">
         <div class="w-full max-w-lg">
             <x-input-error :messages="$errors->all()" class="mb-2" />
-            <x-message :message="session('message')" />
 
             <form method="post" action="{{route('todo.store')}}" enctype="multipart/form-data" class="bg-white shadow-md rounded px-10 pt-6 pb-8 mb-4">
                 @csrf

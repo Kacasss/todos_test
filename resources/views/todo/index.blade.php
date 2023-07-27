@@ -11,7 +11,9 @@
                 <div class="inline-block min-w-full sm:px-6 lg:px-8">
                     <div class="overflow-hidden">
 
-                        <table class="min-w-full text-xs sm:text-sm font-light text-center my-8">
+                        <table class="min-w-full text-xs sm:text-sm font-light text-center {{is_null(session('message')) ? 'my-8' : 'my-2'}}">
+                            <x-message :message="session('message')" />
+
                             <thead class="border-b bg-neutral-600 font-medium text-white">
                                 <tr>
                                     <th scope="col" class="px-2 py-4">項目名</th>

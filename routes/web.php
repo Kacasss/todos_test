@@ -31,4 +31,6 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::resource('todo', TodoItemController::class);
+// Route::resource('todo', TodoItemController::class);
+// ログイン中のみ、TODOリストへ遷移可
+Route::middleware('auth')->resource('todo', TodoItemController::class);

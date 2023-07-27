@@ -41,7 +41,7 @@ class TodoItemController extends Controller
         }
 
         $todo->save();
-        return redirect()->route('todo.create')->with('message', 'TODOを作成しました');
+        return redirect()->route('todo.index')->with('message', 'TODOを作成しました');
     }
 
     public function show(TodoItem $todo)
