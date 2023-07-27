@@ -94,7 +94,7 @@ class TodoItemController extends Controller
         $todo->is_deleted = 1;
         $todo->user_id = auth()->user()->id;
         $todo->save();
-        return redirect()->route('todo.show', $todo)->with('message', 'TODOを削除しました');
+        return redirect()->route('todo.index', $todo)->with('message', 'TODOを削除しました');
     }
 
     /**
