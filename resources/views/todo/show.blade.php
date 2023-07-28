@@ -39,19 +39,19 @@
                                         {{is_null($todo->finished_date) ? '未' : $todo->finished_date}}
                                     </td>
 
-                                    <td class="whitespace-wrap px-6 py-4 flex justify-center">
+                                    <td class="whitespace-wrap px-6 py-4 flex lg:justify-around justify-center lg:flex-row flex-col space-y-4 lg:space-y-0">
                                         <!-- ユーザーが投稿したTODOリストのみ編集可能 -->
                                         @if(Auth::check() && Auth::user()->id === $todo->user_id)
                                             <a href="{{route('todo.complete', $todo)}}">
                                                 <x-primary-button class="bg-purple-700 hover:bg-purple-800 focus:bg-purple-800">完了</x-primary-button>
                                             </a>
                                             <a href="{{route('todo.edit', $todo)}}">
-                                                <x-primary-button class="bg-sky-700 ml-2 hover:bg-sky-800 focus:bg-sky-800">編集</x-primary-button>
+                                                <x-primary-button class="bg-sky-700 hover:bg-sky-800 focus:bg-sky-800">編集</x-primary-button>
                                             </a>
                                             <form method="post" action="{{route('todo.destroy', $todo)}}">
                                                 @csrf
                                                 @method('delete')
-                                                <x-primary-button class="bg-red-700 ml-2" onClick="return confirm('本当に削除しますか？');">削除</x-primary-button>
+                                                <x-primary-button class="bg-red-700" onClick="return confirm('本当に削除しますか？');">削除</x-primary-button>
                                             </form>
                                         @endif
                                     </td>
