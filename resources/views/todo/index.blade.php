@@ -40,13 +40,12 @@
                                             <td class="whitespace-wrap px-6 py-4">
                                                 {{$todo->registration_date}}
                                             </td>
-                                            
                                             <!-- 完了日が未で、期限日が過去日の場合、文字を赤くする -->
                                             <td class="whitespace-wrap px-6 py-4 {{is_null($todo->finished_date) && $todo->expire_date < now()->format('Y-m-d') ? 'text-red-500' : ''}} ">
                                                 {{$todo->expire_date}}
                                             </td>
                                             <td class="whitespace-wrap px-6 py-4">
-                                                <a href="{{route('todo.show', $todo)}}">{{is_null($todo->finished_date) ? '未' : $todo->finished_date}}</a>
+                                                {{is_null($todo->finished_date) ? '未' : $todo->finished_date}}
                                             </td>
                                         </tr>
                                 @endforeach
