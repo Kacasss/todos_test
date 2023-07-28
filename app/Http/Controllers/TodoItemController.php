@@ -97,6 +97,17 @@ class TodoItemController extends Controller
         return redirect()->route('todo.index', $todo)->with('message', 'TODOを削除しました');
     }
 
+    public function complete(TodoItem $todo)
+    {
+        if (!$this->checkUser($todo)) {
+            return redirect()->route('todo.index');
+        }
+
+        $todo->finished_date = now()->format('Y-m-d');
+        $todo->save();
+        return redirect()->route('todo.index', $todo)->with('message', 'TODOを完了しました');
+    }
+
     /**
      * ログイン中のユーザーと投稿したユーザーが一致か確認するメソッド
      * @param TodoItem $todo

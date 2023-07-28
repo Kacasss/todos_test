@@ -42,7 +42,7 @@
                                     <td class="whitespace-wrap px-6 py-4 flex justify-center">
                                         <!-- ユーザーが投稿したTODOリストのみ編集可能 -->
                                         @if(Auth::check() && Auth::user()->id === $todo->user_id)
-                                            <a href="">
+                                            <a href="{{route('todo.complete', $todo)}}">
                                                 <x-primary-button class="bg-purple-700 hover:bg-purple-800 focus:bg-purple-800">完了</x-primary-button>
                                             </a>
                                             <a href="{{route('todo.edit', $todo)}}">
