@@ -29,7 +29,7 @@
                                 <tr class="border-b bg-neutral-50 dark:border-neutral-500 dark:bg-neutral-700 {{is_null($todo->finished_date) ? '' : 'line-through'}}">
                                     <td class="whitespace-wrap px-6 py-4">{{$todo->item_name}}</td>
                                     <td class="whitespace-wrap px-6 py-4">{{$todo->user->name}}</td>
-                                    <td class="whitespace-wrap px-6 py-4">{{$todo->ragistration_date}}</td>
+                                    <td class="whitespace-wrap px-6 py-4">{{$todo->registration_date}}</td>
                                     
                                     <!-- 完了日が未で、期限日が過去日の場合、文字を赤くする -->
                                     <td class="whitespace-wrap px-6 py-4 {{is_null($todo->finished_date) && $todo->expire_date < now()->format('Y-m-d') ? 'text-red-500' : ''}} ">
@@ -42,8 +42,11 @@
                                     <td class="whitespace-wrap px-6 py-4 flex justify-center">
                                         <!-- ユーザーが投稿したTODOリストのみ編集可能 -->
                                         @if(Auth::check() && Auth::user()->id === $todo->user_id)
+                                            <a href="">
+                                                <x-primary-button class="bg-purple-700 hover:bg-purple-800 focus:bg-purple-800">完了</x-primary-button>
+                                            </a>
                                             <a href="{{route('todo.edit', $todo)}}">
-                                                <x-primary-button class="bg-cyan-700 hover:bg-cyan-800 focus:bg-cyan-800">編集</x-primary-button>
+                                                <x-primary-button class="bg-sky-700 ml-2 hover:bg-sky-800 focus:bg-sky-800">編集</x-primary-button>
                                             </a>
                                             <form method="post" action="{{route('todo.destroy', $todo)}}">
                                                 @csrf
