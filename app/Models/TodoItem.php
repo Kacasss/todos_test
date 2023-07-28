@@ -23,5 +23,27 @@ class TodoItem extends Model
         return $this->belongsTo(User::class);
     }
 
-    
+    /**
+     * 期限日順に並べ替え、削除されていないレコードを全件取得
+     * @return array
+     */
+    public function findAllTodoItem()
+    {
+        return $this->orderBy('expire_date')->whereIsDeleted(0)->get();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

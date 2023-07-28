@@ -7,10 +7,16 @@ use Illuminate\Http\Request;
 
 class TodoItemController extends Controller
 {
+    private $todo;
+    
+    public function __construct()
+    {
+        $this->todo = new TodoItem();
+    }
+
     public function index()
     {
-        /** 期限日順に並べ替え、削除されていないレコードを全件取得 */
-        $todos = TodoItem::orderBy('expire_date')->whereIsDeleted(0)->get();
+        $todos = $this->todo->findAllTodoItem();
         $user = auth()->user();
         return view('todo.index', compact('todos', 'user'));
     }
