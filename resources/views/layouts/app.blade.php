@@ -12,7 +12,7 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/test.js'])
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -33,22 +33,6 @@
             </main>
         </div>
 
-        <!-- js後で切り出し予定 jqueryだとエラーの為、考える -->
-        <script>
-            const trCollection = document.getElementsByClassName("tr");
 
-            // HTMLCollectionを配列にする
-            let trArray = Array.from(trCollection);
-
-            // 1つずつ取り出す
-            trArray.forEach(function(tr) {
-
-                tr.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    window.location = tr.dataset.href;
-                });
-
-            });
-        </script>
     </body>
 </html>

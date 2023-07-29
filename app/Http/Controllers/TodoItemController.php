@@ -34,19 +34,7 @@ class TodoItemController extends Controller
             'image' => 'image | max:1024',
         ]);
 
-        $todo = new TodoItem();
-        $todo->item_name = $inputs['item_name'];
-        $todo->registration_date = now()->format('Y-m-d');
-        $todo->expire_date = $inputs['expire_date'];
-        $todo->user_id = auth()->user()->id;
-
-        if (request('image')) {
-            $name = request()->file('image')->getClientOriginalName();
-            request()->file('image')->move('storage/images', $name);
-            $todo->image = $name;
-        }
-
-        $todo->save();
+        $this->todo->insert($inputs);
         return redirect()->route('todo.index')->with('message', 'TODOを作成しました');
     }
 
@@ -75,19 +63,8 @@ class TodoItemController extends Controller
             'image' => 'image | max:1024',
         ]);
 
-        $todo->item_name = $inputs['item_name'];
-        $todo->expire_date = $inputs['expire_date'];
-        $todo->finished_date = $request->finished_date == 1 ? now()->format('Y-m-d') : null;
-        $todo->user_id = auth()->user()->id;
-
-        if (request('image')) {
-            $name = request()->file('image')->getClientOriginalName();
-            request()->file('image')->move('storage/images', $name);
-            $todo->image = $name;
-        }
-        
-        $todo->save();
-        return redirect()->route('todo.show', $todo)->with('message', 'TODOを更新しました');
+        $this->todo->updateTodoItem($inputs, $request, $todo);
+        return redirect()->route('todo.index', $todo)->with('message', 'TODOを更新しました');
     }
 
     public function destroy(TodoItem $todo)

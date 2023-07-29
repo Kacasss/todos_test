@@ -12,8 +12,8 @@
                     <div class="overflow-hidden">
 
                     <x-message :message="session('message')" />
-                        <!-- エラーメッセージ、投稿後メッセージがない場合はmy-8付与 -->
-                        <table class="min-w-full text-xs sm:text-sm font-light text-center {{empty($errors->all()) && is_null(session('message')) ? 'my-8' : ''}}">
+                        <!-- エラーメッセージがない場合はmy-8付与 -->
+                        <table class="min-w-full text-xs sm:text-sm font-light text-center {{empty($errors->all()) ? 'my-8' : ''}}">
                             <thead class="border-b bg-neutral-600 font-medium text-white">
                                 <tr>
                                     <th scope="col" class="px-2 py-4">項目名</th>
