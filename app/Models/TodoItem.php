@@ -66,11 +66,4 @@ class TodoItem extends Model
 
 
 
-
-
-
-
-
-
-
 }
