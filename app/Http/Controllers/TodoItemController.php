@@ -10,9 +10,9 @@ class TodoItemController extends Controller
 {
     private $todo;
     
-    public function __construct()
+    public function __construct(TodoItem $todoItem)
     {
-        $this->todo = new TodoItem();
+        $this->todo = $todoItem;
     }
 
     public function index()
