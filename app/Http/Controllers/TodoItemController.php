@@ -63,7 +63,7 @@ class TodoItemController extends Controller
             'image' => 'image | max:1024',
         ]);
 
-        $this->todo->updateTodoItem($inputs, $request, $todo);
+        $this->todo->updateTodoItem($inputs, $request);
         return redirect()->route('todo.index', $todo)->with('message', 'TODOを更新しました');
     }
 

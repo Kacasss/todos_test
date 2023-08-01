@@ -48,8 +48,7 @@ class TodoItem extends Model
     }
 
     // 更新途中
-    public function updateTodoItem($inputs, $request, $todo) {
-        $this->id = $todo->id;
+    public function updateTodoItem($inputs, $request) {
         $this->item_name = $inputs['item_name'];
         $this->expire_date = $inputs['expire_date'];
         $this->finished_date = $request->finished_date == 1 ? now()->format('Y-m-d') : null;
@@ -60,7 +59,7 @@ class TodoItem extends Model
             request()->file('image')->move('storage/images', $name);
             $this->image = $name;
         }
-        
+
         $this->save();
     }
 
