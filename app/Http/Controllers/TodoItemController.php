@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TodoItemRequest;
 use App\Models\TodoItem;
 use Illuminate\Http\Request;
 
@@ -26,14 +27,9 @@ class TodoItemController extends Controller
         return view('todo.create');
     }
 
-    public function store(Request $request)
+    public function store(TodoItemRequest $request)
     {
-        $inputs = $request->validate([
-            'item_name' => 'required | max:100',
-            'expire_date' => 'required | max:1000',
-            'image' => 'image | max:1024',
-        ]);
-
+        $inputs = $request->all();
         $this->todo->insert($inputs);
         return redirect()->route('todo.index')->with('message', 'TODOを作成しました');
     }
@@ -51,18 +47,13 @@ class TodoItemController extends Controller
         return view('todo.edit', compact('todo'));
     }
 
-    public function update(Request $request, TodoItem $todo)
+    public function update(TodoItemRequest $request, TodoItem $todo)
     {
         if (!$this->checkUser($todo)) {
             return redirect()->route('todo.index');
         }
-        
-        $inputs = $request->validate([
-            'item_name' => 'required | max:100',
-            'expire_date' => 'required | max:1000',
-            'image' => 'image | max:1024',
-        ]);
 
+        $inputs = $request->all();
         $this->todo->updateTodoItem($inputs, $request);
         return redirect()->route('todo.index', $todo)->with('message', 'TODOを更新しました');
     }
