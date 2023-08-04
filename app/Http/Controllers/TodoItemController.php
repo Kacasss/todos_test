@@ -64,8 +64,7 @@ class TodoItemController extends Controller {
             return redirect()->route('todo.index');
         }
 
-        $todo->finished_date = now()->format('Y-m-d');
-        $todo->save();
+        $this->todo->completeTodoItem($todo);
         return redirect()->route('todo.index', $todo)->with('message', 'TODOを完了しました');
     }
 

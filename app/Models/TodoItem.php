@@ -88,8 +88,18 @@ class TodoItem extends Model
         }
     }
     
+    public function completeTodoItem(TodoItem $todo) {
+        $todo->finished_date = now()->format('Y-m-d');
 
-    
+        DB::beginTransaction();
+        try {
+            $todo->save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
+    }
+
     /**
      * ログイン中のユーザーと投稿したユーザーが一致か確認するメソッド
      * @param TodoItem $todo
