@@ -6,58 +6,41 @@ use App\Http\Requests\TodoItemRequest;
 use App\Models\TodoItem;
 use Illuminate\Http\Request;
 
-class TodoItemController extends Controller
-{
+class TodoItemController extends Controller {
     private $todo;
     
-    public function __construct(TodoItem $todoItem)
-    {
+    public function __construct(TodoItem $todoItem) {
         $this->todo = $todoItem;
     }
 
-    public function index()
-    {
+    public function index() {
         $todos = $this->todo->findAllTodoItem();
         $user = auth()->user();
         return view('todo.index', compact('todos', 'user'));
     }
 
-    public function create()
-    {
+    public function create() {
         return view('todo.create');
     }
 
-
-    public function store(TodoItemRequest $request)
-    {
+    public function store(TodoItemRequest $request) {
         $inputs = $request->all();
         $this->todo->insert($inputs);
         return redirect()->route('todo.index')->with('message', 'TODOを作成しました');
     }
 
-    
-    public function show(TodoItem $todo)
-    {
+    public function show(TodoItem $todo) {
         return view('todo.show', compact('todo'));
     }
 
-    public function edit(TodoItem $todo)
-    {
+    public function edit(TodoItem $todo) {
         if (!$this->todo->checkUser($todo)) {
             return redirect()->route('todo.index');
         }
-
         return view('todo.edit', compact('todo'));
     }
 
-
-
-    
-
-
-    public function update(TodoItemRequest $request, TodoItem $todo)
-    {
-
+    public function update(TodoItemRequest $request, TodoItem $todo) {
         if (!$this->todo->checkUser($todo)) {
             return redirect()->route('todo.index');
         }
@@ -67,24 +50,18 @@ class TodoItemController extends Controller
         return redirect()->route('todo.index', $todo)->with('message', 'TODOを更新しました');
     }
 
-
-
-
-    public function destroy(TodoItem $todo)
-    {
+    public function destroy(TodoItem $todo) {
         if (!$this->todo->checkUser($todo)) {
             return redirect()->route('todo.index');
         }
 
-        /** 論理削除を行う為、1にする */
         $todo->is_deleted = 1;
         $todo->user_id = auth()->user()->id;
         $todo->save();
         return redirect()->route('todo.index', $todo)->with('message', 'TODOを削除しました');
     }
 
-    public function complete(TodoItem $todo)
-    {
+    public function complete(TodoItem $todo) {
         if (!$this->todo->checkUser($todo)) {
             return redirect()->route('todo.index');
         }
