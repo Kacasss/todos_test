@@ -55,9 +55,7 @@ class TodoItemController extends Controller {
             return redirect()->route('todo.index');
         }
 
-        $todo->is_deleted = 1;
-        $todo->user_id = auth()->user()->id;
-        $todo->save();
+        $this->todo->deleteTodoItem($todo);
         return redirect()->route('todo.index', $todo)->with('message', 'TODOを削除しました');
     }
 

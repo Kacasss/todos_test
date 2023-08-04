@@ -75,6 +75,19 @@ class TodoItem extends Model
         }
     }
 
+    public function deleteTodoItem(TodoItem $todo) {
+        $todo->is_deleted = 1;
+        $todo->user_id = auth()->user()->id;
+
+        DB::beginTransaction();
+        try {
+            $todo->save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
+    }
+    
 
     
     /**
