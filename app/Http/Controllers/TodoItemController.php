@@ -27,6 +27,7 @@ class TodoItemController extends Controller
         return view('todo.create');
     }
 
+
     public function store(TodoItemRequest $request)
     {
         $inputs = $request->all();
@@ -34,6 +35,7 @@ class TodoItemController extends Controller
         return redirect()->route('todo.index')->with('message', 'TODOを作成しました');
     }
 
+    
     public function show(TodoItem $todo)
     {
         return view('todo.show', compact('todo'));
@@ -41,26 +43,36 @@ class TodoItemController extends Controller
 
     public function edit(TodoItem $todo)
     {
-        if (!$this->checkUser($todo)) {
+        if (!$this->todo->checkUser($todo)) {
             return redirect()->route('todo.index');
         }
+
         return view('todo.edit', compact('todo'));
     }
 
+
+
+    
+
+
     public function update(TodoItemRequest $request, TodoItem $todo)
     {
-        if (!$this->checkUser($todo)) {
+
+        if (!$this->todo->checkUser($todo)) {
             return redirect()->route('todo.index');
         }
 
         $inputs = $request->all();
-        $this->todo->updateTodoItem($inputs, $request);
+        $this->todo->updateTodoItem($inputs, $request, $todo);
         return redirect()->route('todo.index', $todo)->with('message', 'TODOを更新しました');
     }
 
+
+
+
     public function destroy(TodoItem $todo)
     {
-        if (!$this->checkUser($todo)) {
+        if (!$this->todo->checkUser($todo)) {
             return redirect()->route('todo.index');
         }
 
@@ -73,7 +85,7 @@ class TodoItemController extends Controller
 
     public function complete(TodoItem $todo)
     {
-        if (!$this->checkUser($todo)) {
+        if (!$this->todo->checkUser($todo)) {
             return redirect()->route('todo.index');
         }
 
@@ -82,16 +94,4 @@ class TodoItemController extends Controller
         return redirect()->route('todo.index', $todo)->with('message', 'TODOを完了しました');
     }
 
-    /**
-     * ログイン中のユーザーと投稿したユーザーが一致か確認するメソッド
-     * @param TodoItem $todo
-     * @return bool true | false
-     */
-    private function checkUser(TodoItem $todo)
-    {
-        if (auth()->user()->id === $todo->user_id) {
-            return true;
-        }
-        return false;
-    }
 }

@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class TodoItem extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'user_id',
         'item_name',
         'image',
@@ -36,7 +38,6 @@ class TodoItem extends Model
         $this->registration_date = now()->format('Y-m-d');
         $this->expire_date = $inputs['expire_date'];
         $this->user_id = auth()->user()->id;
-        // $this->fill($request->all);
 
         if (request('image')) {
             $name = request()->file('image')->getClientOriginalName();
@@ -44,26 +45,48 @@ class TodoItem extends Model
             $this->image = $name;
         }
 
-        $this->save();
+        DB::beginTransaction();
+        try {
+            $this->save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
     }
 
-    // 更新途中
-    public function updateTodoItem($inputs, $request) {
-        $this->item_name = $inputs['item_name'];
-        $this->expire_date = $inputs['expire_date'];
-        $this->finished_date = $request->finished_date == 1 ? now()->format('Y-m-d') : null;
-        $this->user_id = auth()->user()->id;
+    public function updateTodoItem($inputs, $request, $todo) {
+        $todo->item_name = $inputs['item_name'];
+        $todo->expire_date = $inputs['expire_date'];
+        $todo->finished_date = $request->finished_date == 1 ? now()->format('Y-m-d') : null;
+        $todo->user_id = auth()->user()->id;
 
         if (request('image')) {
             $name = request()->file('image')->getClientOriginalName();
             request()->file('image')->move('storage/images', $name);
-            $this->image = $name;
+            $todo->image = $name;
         }
 
-        $this->save();
+        DB::beginTransaction();
+        try {
+            $todo->save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
     }
 
 
-
+    
+    /**
+     * ログイン中のユーザーと投稿したユーザーが一致か確認するメソッド
+     * @param TodoItem $todo
+     * @return bool true | false
+     */
+    public function checkUser(TodoItem $todo) {
+        if (auth()->user()->id === $todo->user_id) {
+            return true;
+        }
+        return false;
+    }
 
 }
