@@ -14,7 +14,7 @@ class TodoItemController extends Controller {
     }
 
     public function index() {
-        $todos = $this->todo->findAllTodoItem();
+        $todos = $this->todo->findAll();
         $user = auth()->user();
         return view('todo.index', compact('todos', 'user'));
     }
