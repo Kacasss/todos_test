@@ -1,5 +1,5 @@
 # todos_test
-- 作成時期：2023年7月下旬～8月上旬
+- 作成時期：令和5年 7月下旬～8月上旬
 - 所要時間：40時間程
 - 協力者：有　未来のかたち講師
 - 開発環境：PHP（Laravel）、HTML（blade）、CSS（Tailwind）、MYSQL
