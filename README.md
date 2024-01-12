@@ -36,3 +36,7 @@ TODOリストの課題があり、要件定義書、設計書を見てTODOリス
 
 ## 後回しにしている機能
 ページネーション、管理者機能
+
+## 動画
+![20240112_todo_app](https://github.com/Kacasss/todos_test/assets/91928341/09bc7ade-8d2a-4afc-9420-a2be1ec40975)
+
